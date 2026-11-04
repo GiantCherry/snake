@@ -5,7 +5,7 @@ import random
 pygame.init()
 
 white = (255, 255, 255)
-yellow = (255, 255, 255)
+yellow = (255, 255, 102)
 black = (0, 0, 0)
 red = (255, 0, 0)
 green = (0, 255, 0)
@@ -20,6 +20,10 @@ snake_block = 10
 snake_speed = 15
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
+
+def your_score(score):
+    value = score_font.render("Ваш счет: " + str(score), True, blue)
+    dis.blit(value, [0, 0])
 
 def out_snake(sanke_blcck, snake_list):
     for x in snake_list:
@@ -46,6 +50,7 @@ def gameLoop():  # Описываем всю игровую логику в од
         while game_close == True:
             dis.fill(blue)
             message("Вы проиграли! Нажмите Q для выхода или C для повторной игры", red)
+            your_score(length_of_snake - 1)
             pygame.display.update()
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -91,6 +96,7 @@ def gameLoop():  # Описываем всю игровую логику в од
             if x == snake_head:
                 game_close = True
         out_snake(snake_block, snake_list)
+        your_score(length_of_snake - 1)
         pygame.display.update()
         if x1 == foodx and y1 == foody:
             foodx = round(random.randrange(0, dis_width - snake_block)/ 10.0) * 10
